@@ -8,3 +8,4 @@ class Event(BaseModel):
     agent_name: str
     content: str
     event_type: str  # "message" or "tool_call"
+    prompt: str | None = None  # the input that generated this event's content

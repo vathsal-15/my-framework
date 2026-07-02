@@ -44,3 +44,14 @@ class Session:
                 })
 
         return results    
+
+    def replay(self, agents: dict) -> "Session":
+        """Re-run this session's events using cached responses for identical results."""
+        new_session = Session()
+        for event in self._events:
+            agent = agents.get(event.agent_name)
+            if agent:
+                agent.generate(event.prompt if event.prompt else "", new_session)
+            else:
+                new_session.append(event)
+        return new_session    
