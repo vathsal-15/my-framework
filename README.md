@@ -1,18 +1,20 @@
 # my-framework
 
-A multi-agent AI framework with built-in time-travel debugging — rewind, fork, and diff any agent conversation.
+A multi-agent AI framework with built-in time-travel debugging — rewind, fork, diff, and replay any agent conversation.
 
-Inspired by [AutoGen](https://github.com/microsoft/autogen), but with one core difference: every agent conversation is recorded as an event log, so you can go back to any point, branch off, and compare what happened differently — like Git, but for AI agent conversations.
+Inspired by [AutoGen](https://github.com/microsoft/autogen), but with one core difference: every agent conversation is recorded as an event log, so you can go back to any point, branch off, compare what happened differently, and deterministically replay a run — like Git, but for AI agent conversations.
 
 ## Why?
 
-When multiple AI agents talk to each other, debugging is hard. If something goes wrong three steps in, you usually have to start the whole run over and hope you can reproduce the issue. This framework lets you rewind to the exact moment things went wrong, branch from there, and directly compare the two outcomes.
+When multiple AI agents talk to each other, debugging is hard. If something goes wrong three steps in, you usually have to start the whole run over and hope you can reproduce the issue. This framework lets you rewind to the exact moment things went wrong, branch from there, directly compare the two outcomes, and replay a run deterministically to verify a fix actually worked.
 
 ## Features
 
 - **Event-sourced sessions** — every agent message is a recorded, linked event
 - **`fork_at()`** — rewind to any point in a conversation and branch it
 - **`diff()`** — compare two conversation branches and see exactly where they diverged
+- **`replay()`** — deterministically re-run a session using cached responses
+- **Multi-agent pipelines** — chain agents together (e.g., researcher → writer → reviewer)
 - **Real AI agents** — powered by Groq's fast inference API
 
 ## Installation
@@ -47,11 +49,24 @@ a_event_2 = answerer.generate(q_event.content, forked)
 diff_result = session.diff(forked)
 for entry in diff_result:
     print(entry)
+
+# Deterministically replay the original run
+replayed = session.replay({"questioner": questioner, "answerer": answerer})
 ```
+
+## Examples
+
+See the `examples/` folder for runnable demos:
+- `basic_event.py`, `basic_session.py` — core data model basics
+- `fork_demo.py`, `diff_demo.py` — rewind and compare conversations
+- `replay_demo.py` — deterministic replay with caching
+- `real_agent_demo.py`, `real_session_demo.py` — real AI agents logging to a session
+- `three_agent_pipeline.py` — a researcher → writer → reviewer pipeline
+- `pipeline_fork_diff.py` — forking and diffing a multi-agent pipeline
 
 ## Status
 
-Early prototype. Core primitives (`Event`, `Session`, `fork_at`, `diff`) are implemented and tested with live AI agents. Next up: `replay()` for deterministic re-execution.
+Core primitives (`Event`, `Session`, `fork_at`, `diff`, `replay`) are implemented and tested with live AI agents across both simple 2-agent conversations and multi-agent pipelines. Next up: MCP/tool support so agents can call external tools.
 
 ## License
 
