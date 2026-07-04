@@ -16,6 +16,7 @@ When multiple AI agents talk to each other, debugging is hard. If something goes
 - **`replay()`** — deterministically re-run a session using cached responses
 - **Multi-agent pipelines** — chain agents together (e.g., researcher → writer → reviewer)
 - **Real AI agents** — powered by Groq's fast inference API
+- **Tool-calling** — agents can invoke external functions (calculator, datetime, and easily extensible to more)
 
 ## Installation
 
@@ -63,10 +64,11 @@ See the `examples/` folder for runnable demos:
 - `real_agent_demo.py`, `real_session_demo.py` — real AI agents logging to a session
 - `three_agent_pipeline.py` — a researcher → writer → reviewer pipeline
 - `pipeline_fork_diff.py` — forking and diffing a multi-agent pipeline
+- `tool_use_demo.py`, `multi_tool_demo.py` — agents using external tools like a calculator and datetime
 
 ## Status
 
-Core primitives (`Event`, `Session`, `fork_at`, `diff`, `replay`) are implemented and tested with live AI agents across both simple 2-agent conversations and multi-agent pipelines. Next up: MCP/tool support so agents can call external tools.
+Core primitives (`Event`, `Session`, `fork_at`, `diff`, `replay`) are implemented and tested with live AI agents across both simple 2-agent conversations and multi-agent pipelines. Basic tool-calling is now supported. Next up: full MCP protocol support for connecting to real external MCP servers.
 
 ## License
 
