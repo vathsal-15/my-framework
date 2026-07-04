@@ -37,7 +37,7 @@ class Agent:
         tool_name, arg = match.group(1), match.group(2)
         for tool in self.tools:
             if tool.name == tool_name:
-                return tool.run(expression=arg)
+                return tool.func(arg)
         return None
 
     def generate(self, user_message: str, session: Session, use_cache: bool = True) -> Event:

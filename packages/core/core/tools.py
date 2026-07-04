@@ -25,3 +25,15 @@ calculator_tool = Tool(
     description="Evaluates a basic arithmetic expression, e.g. '2 + 2' or '15 * 3'.",
     func=calculator
 )
+from datetime import datetime
+
+def current_datetime(format: str = "") -> str:
+    """Returns the current date and time."""
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+
+datetime_tool = Tool(
+    name="current_datetime",
+    description="Returns the current date and time. Takes no meaningful argument, pass an empty string.",
+    func=current_datetime
+)
